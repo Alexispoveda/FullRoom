@@ -1,25 +1,66 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useState} from 'react';
 import './App.css';
 
-function App() {
+import {Box, AppBar, Toolbar, IconButton, Typography, Button, List, ListItem, ListItemText} from '@material-ui/core'
+
+const App = () => {
+
+  const [LugaresState, setLugaresState] = useState([
+    {
+      nombre: "Gimnasio",
+      capacidadMaxima: 50
+    },
+    {
+      nombre: "Capilla Grande",
+      capacidadMaxima: 49
+    },
+    {
+      nombre: "Capilla Pequeña",
+      capacidadMaxima: 5
+    },
+    {
+      nombre: "Baño Pabellón A",
+      capacidadMaxima: 7
+    },
+    {
+      nombre: "Baño Pabellón B",
+      capacidadMaxima: 7
+    },
+    {
+      nombre: "Baño Pabellón C",
+      capacidadMaxima: 7
+    },
+    {
+      nombre: "Salón Audiovisuales",
+      capacidadMaxima: 40
+    },
+    {
+      nombre: "Biblioteca",
+      capacidadMaxima: 64
+    }
+  ])
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            C
+          </IconButton>
+          <Typography variant="h6">
+            Nombre de la aplicación
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+      <List>
+        {LugaresState.map(lugar =>
+        <ListItem key={lugar.nombre} divider>
+          <ListItemText secondary={'0/'+lugar.capacidadMaxima}>{lugar.nombre}</ListItemText>
+        </ListItem>  
+        )}
+      </List>
+    </Box>
   );
 }
 
