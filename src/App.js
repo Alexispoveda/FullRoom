@@ -15,70 +15,24 @@ import firebase from './firebase'
 
 const App = () => {
 
-  const [LugaresState, setLugaresState] = useState([
-    {
-      nombre: "Baño Pabellón A",
-      capacidadMaxima: 7,
-      enSitio:0
-    },
-    {
-      nombre: "Baño Pabellón B",
-      capacidadMaxima: 7,
-      enSitio:0
-    },
-    {
-      nombre: "Baño Pabellón C",
-      capacidadMaxima: 7,
-      enSitio:0
-    },
-    {
-      nombre: "Biblioteca",
-      capacidadMaxima: 64,
-      enSitio:0
-    },
-    {
-      nombre: "Capilla Grande",
-      capacidadMaxima: 49,
-      enSitio:0
-    },
-    {
-      nombre: "Capilla Pequeña",
-      capacidadMaxima: 5,
-      enSitio:0
-    },
-    {
-      nombre: "Gimnasio",
-      capacidadMaxima: 50,
-      enSitio:0
-    },
-    {
-      nombre: "Salón Audiovisuales",
-      capacidadMaxima: 40,
-      enSitio:0
-    }
-  ])
-  
+  const [LugaresState, setLugaresState] = useState({})
+
+  const db = firebase.database()
+
   useEffect(()=>{ 
-    const lugares = [...LugaresState]
-    const db = firebase.database().ref(); 
-    const dbLugares = db.child('lugares');
+    const ref = db.ref(); 
+    const dbLugares = ref.child('lugares');
 
     dbLugares.on('value', snapshot=>{
-      Object.values(snapshot.val()).forEach((personasEnSito,index)=>{
-        lugares[index].enSitio = personasEnSito
-      })
+      setLugaresState(snapshot.val())
     })
-
-    setLugaresState(lugares)
-
-    console.log('Alexis')
-  },[])
+  },[db])
   
   return (
     <Box>
       <Header/>
       <List>
-        {LugaresState.map(lugar =>
+        {Object.values(LugaresState).map(lugar =>
         <ListItem key={lugar.nombre} divider>
           <ListItemText secondary={'Capacidad Máxima: '+ lugar.capacidadMaxima}>{lugar.nombre}</ListItemText>
           <ListItemAvatar><Avatar style={{backgroundColor: lugar.enSitio === lugar.capacidadMaxima ? 'red' : 'green'}}>{lugar.enSitio}</Avatar></ListItemAvatar>
