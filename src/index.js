@@ -8,13 +8,23 @@ import './index.css';
 //App
 import App from './App';
 
-//PWA
+//React Router
+import {BrowserRouter} from 'react-router-dom'
+
+//Auth Provider
+import {AuthProvider} from './Tools/Auth'
+
+//PWA (Progressive Web App)
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <AuthProvider>
+    <BrowserRouter>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </BrowserRouter>
+  </AuthProvider>,
   document.getElementById('root')
 );
 
