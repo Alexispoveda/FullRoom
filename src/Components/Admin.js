@@ -7,7 +7,7 @@ import {List, ListItem, ListItemText, ListItemAvatar, Avatar, TextField, Box, Ty
 const Admin = props =>
     <List>
         {Object.values(props.lugares).map(lugar =>
-            lugar.edit === props.rol ?
+            lugar.edit.includes(props.rol) ?
                 <ListItem key={lugar.nombre} divider button onClick={()=>props.seleccionar(lugar)}>
                     <ListItemText secondary={'Capacidad Máxima: '+ lugar.capacidadMaxima}>{lugar.nombre}</ListItemText>
                     <ListItemAvatar><Avatar style={{backgroundColor: lugar.enSitio >= lugar.capacidadMaxima ? 'red' : 'green'}}>{lugar.enSitio}</Avatar></ListItemAvatar>
